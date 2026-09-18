@@ -19,10 +19,22 @@ class AppTextStyles {
         color: AppColors.darkGreen,
       );
 
+  static TextStyle get h3 => GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      );
+
   static TextStyle get body => GoogleFonts.poppins(
         fontSize: 14,
         fontWeight: FontWeight.w400,
         color: AppColors.textSecondary,
+      );
+
+  static TextStyle get caption => GoogleFonts.poppins(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: AppColors.textMuted,
       );
 
   static TextStyle get label => GoogleFonts.poppins(

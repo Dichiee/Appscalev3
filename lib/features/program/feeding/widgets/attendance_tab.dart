@@ -8,11 +8,9 @@ import '../../../../data/local/feeding_enrollment_repository.dart';
 import '../../../../data/local/feeding_suggestion_service.dart';
 import '../../../../data/local/meal_plan_repository.dart';
 import '../../../../data/models/child.dart';
-import '../../../../shared/utils/app_page_route.dart';
 import '../../../../shared/utils/app_pickers.dart';
 import '../../../../shared/widgets/app_button.dart';
 import '../../../../shared/widgets/empty_state.dart';
-import '../add_feeding_feedback_screen.dart';
 
 const _currentBarangay = 'Tiguion'; // TODO: pull from logged-in BNS session
 
@@ -38,8 +36,18 @@ class _AttendanceTabState extends State<AttendanceTab> {
   }
 
   Future<void> _pickDate() async {
-    final picked = await showAppDatePicker(context: context, initialDate: _selectedDate, firstDate: DateTime(2020), lastDate: DateTime.now());
-    if (picked != null) setState(() { _selectedDate = picked; _draftStatuses = {}; });
+    final picked = await showAppDatePicker(
+      context: context,
+      initialDate: _selectedDate,
+      firstDate: DateTime(2020),
+      lastDate: DateTime.now().add(const Duration(days: 120)),
+    );
+    if (picked != null) {
+      setState(() {
+        _selectedDate = picked;
+        _draftStatuses = {};
+      });
+    }
   }
 
   @override
@@ -128,15 +136,9 @@ class _AttendanceTabState extends State<AttendanceTab> {
               label: 'Save Attendance',
               onPressed: () async {
                 await FeedingAttendanceRepository().saveForDate(_currentBarangay, _selectedDate, statuses);
-                if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Attendance saved')));
+                if (!context.mounted) return;
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Attendance saved')));
               },
-            ),
-            const SizedBox(height: 10),
-            Center(
-              child: InkWell(
-                onTap: () => Navigator.push(context, appPageRoute(const AddFeedingFeedbackScreen())),
-                child: Text('+ Add feedback for this day', style: AppTextStyles.body.copyWith(color: AppColors.primaryGreen, fontWeight: FontWeight.w600, fontSize: 12)),
-              ),
             ),
           ],
         ],
@@ -171,7 +173,11 @@ class _SuggestedCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: AppColors.statRed.withOpacity(0.06), borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.statRed.withOpacity(0.3))),
+      decoration: BoxDecoration(
+        color: AppColors.statRed.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.statRed.withValues(alpha: 0.3)),
+      ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Row(children: [
           const Icon(Icons.error_outline, size: 16, color: AppColors.statRed),
@@ -255,7 +261,8 @@ class _EnrollSearchSheetState extends State<_EnrollSearchSheet> {
                   trailing: FilledButton(
                     onPressed: () async {
                       await FeedingEnrollmentRepository().enroll(c.id);
-                      if (mounted) Navigator.pop(context);
+                      if (!context.mounted) return;
+                      Navigator.pop(context);
                     },
                     child: const Text('Enroll'),
                   ),

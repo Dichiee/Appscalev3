@@ -7,15 +7,31 @@ class AppDateField extends StatelessWidget {
   final String label;
   final DateTime? value;
   final ValueChanged<DateTime> onChanged;
+  final DateTime? firstDate;
+  final DateTime? lastDate;
 
-  const AppDateField({super.key, required this.label, required this.value, required this.onChanged});
+  const AppDateField({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.onChanged,
+    this.firstDate,
+    this.lastDate,
+  });
 
   Future<void> _pickDate(BuildContext context) async {
+    final effectiveFirst = firstDate ?? DateTime(1950);
+    final effectiveLast = lastDate ?? DateTime.now().add(const Duration(days: 365 * 5));
+    final baseInitial = value ?? DateTime.now();
+    final clampedInitial = baseInitial.isBefore(effectiveFirst)
+        ? effectiveFirst
+        : (baseInitial.isAfter(effectiveLast) ? effectiveLast : baseInitial);
+
     final picked = await showAppDatePicker(
       context: context,
-      initialDate: value ?? DateTime.now(),
-      firstDate: DateTime(1950),
-      lastDate: DateTime.now(),
+      initialDate: clampedInitial,
+      firstDate: effectiveFirst,
+      lastDate: effectiveLast,
     );
     if (picked != null) onChanged(picked);
   }
@@ -41,8 +57,12 @@ class AppDateField extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    value == null ? 'dd/mm/yyyy' : '${value!.day.toString().padLeft(2, '0')}/${value!.month.toString().padLeft(2, '0')}/${value!.year}',
-                    style: AppTextStyles.body.copyWith(color: value == null ? AppColors.textMuted : AppColors.textPrimary),
+                    value == null
+                        ? 'dd/mm/yyyy'
+                        : '${value!.day.toString().padLeft(2, '0')}/${value!.month.toString().padLeft(2, '0')}/${value!.year}',
+                    style: AppTextStyles.body.copyWith(
+                      color: value == null ? AppColors.textMuted : AppColors.textPrimary,
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

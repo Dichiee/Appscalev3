@@ -37,7 +37,29 @@ class MealPlanRepository {
       final to = p.effectiveTo == null ? null : DateTime(p.effectiveTo!.year, p.effectiveTo!.month, p.effectiveTo!.day);
       return !d.isBefore(from) && (to == null || !d.isAfter(to));
     }).toList();
-    return matches.isEmpty ? null : matches.first; // already sorted newest-first
+    if (matches.isNotEmpty) return matches.first;
+    final all = getAllForBarangay(barangay);
+    return all.isEmpty ? null : all.first;
+  }
+
+  Future<void> seedInitialIfEmpty(String barangay) async {
+    if (getAllForBarangay(barangay).isNotEmpty) return;
+    final defaultPlan = MealPlan(
+      id: generateId(),
+      foodItems: [
+        'Mon: Champorado with Milk & Hard Boiled Egg',
+        'Tue: Ginataang Monggo with Malunggay & Dilis',
+        'Wed: Chicken Arroz Caldo with Carrots & Ginger',
+        'Thu: Pork Picadillo with Sayote, Carrots & Rice',
+        'Fri: Sotanghon Guisado with Vegetables & Boiled Egg',
+      ],
+      effectiveFrom: DateTime.now().subtract(const Duration(days: 14)),
+      effectiveTo: null,
+      barangay: barangay,
+      createdAt: DateTime.now().subtract(const Duration(days: 14)),
+    );
+    await _box.put(defaultPlan.id, defaultPlan.toMap());
+    AppDataBus.notifyChanged();
   }
 
   static String generateId() => const Uuid().v4();

@@ -100,7 +100,7 @@ class _SetFeedingScheduleScreenState extends State<SetFeedingScheduleScreen> {
                         label: Text(_dayLabels[d]!),
                         selected: selected,
                         onSelected: (_) => setState(() => selected ? _selectedDays.remove(d) : _selectedDays.add(d)),
-                        selectedColor: AppColors.primaryGreen.withOpacity(0.16),
+                        selectedColor: AppColors.primaryGreen.withValues(alpha: 0.16),
                         labelStyle: TextStyle(color: selected ? AppColors.primaryGreen : AppColors.textSecondary, fontWeight: FontWeight.w600, fontSize: 12),
                         side: BorderSide(color: selected ? AppColors.primaryGreen : AppColors.border),
                         backgroundColor: AppColors.surface,

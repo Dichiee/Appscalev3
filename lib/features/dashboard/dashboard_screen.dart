@@ -13,7 +13,9 @@ import '../referrals/referrals_overview_screen.dart';
 import '../../shared/utils/app_page_route.dart';
 
 import '../../data/local/notification_repository.dart';
+import '../../data/local/program_schedule_repository.dart';
 import '../notifications/notifications_screen.dart';
+import '../profile/user_profile_screen.dart';
 
 import '../masterlist/widgets/masterlist_header.dart';
 
@@ -36,6 +38,7 @@ class _DashboardBodyState extends State<DashboardBody> {
   void initState() {
     super.initState();
     _notificationRepo.seedInitialIfEmpty();
+    ProgramScheduleRepository().seedInitialIfEmpty('Tiguion');
     AutoGraduationService().runForBarangay('Tiguion'); // TODO: pull from session
   }
 
@@ -62,6 +65,7 @@ class _DashboardBodyState extends State<DashboardBody> {
                 unreadNotificationCount: unreadNotifs,
                 onSyncTap: () {},
                 onNotificationTap: () => Navigator.push(context, appPageRoute(const NotificationsScreen())),
+                onProfileTap: () => Navigator.push(context, appPageRoute(const UserProfileScreen())),
               ),
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.lg),

@@ -18,6 +18,9 @@ class HiveBoxes {
   static const feedingAttendance = 'feeding_attendance_box';
   static const feedingFeedback = 'feeding_feedback_box';
   static const notifications = 'notifications_box';
+  static const programSchedule = 'program_schedule_box';
+  static const vitaminA = 'vitamin_a_box';
+  static const deworming = 'deworming_box';
 
   static Future<void> init() async {
     await Hive.initFlutter();
@@ -34,6 +37,9 @@ class HiveBoxes {
     await Hive.openBox(feedingAttendance);
     await Hive.openBox(feedingFeedback);
     await Hive.openBox(notifications);
+    await Hive.openBox(programSchedule);
+    await Hive.openBox(vitaminA);
+    await Hive.openBox(deworming);
     // Later: openBox<Child>('children_box'), openBox<Mother>('mothers_box'), etc.
   }
 }

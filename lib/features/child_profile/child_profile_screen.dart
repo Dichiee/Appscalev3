@@ -4,7 +4,6 @@ import '../../data/local/app_data_bus.dart';
 import '../../data/local/child_repository.dart';
 import '../../data/models/child.dart';
 import '../../shared/utils/app_page_route.dart';
-import '../../shared/widgets/coming_soon_placeholder.dart';
 import '../../shared/widgets/deactivate_beneficiary_sheet.dart';
 import '../beneficiary/add_child_screen.dart';
 import 'add_measurement_screen.dart';
@@ -13,6 +12,7 @@ import 'widgets/child_profile_header.dart';
 import 'widgets/history_tab.dart';
 import 'widgets/info_tab.dart';
 import 'widgets/profile_tab_bar.dart';
+import 'widgets/child_programs_tab.dart';
 
 class ChildProfileScreen extends StatefulWidget {
   final Child child;
@@ -76,7 +76,7 @@ class _ChildProfileScreenState extends State<ChildProfileScreen> {
                       InfoTab(child: child),
                       HistoryTab(childId: child.id),
                       ChartsTab(childId: child.id),
-                      const ComingSoonPlaceholder(label: 'Programs'),
+                      ChildProgramsTab(child: child),
                     ],
                   ),
                 ),

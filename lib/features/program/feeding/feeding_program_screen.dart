@@ -27,7 +27,7 @@ class _FeedingProgramScreenState extends State<FeedingProgramScreen> {
       body: SafeArea(
         child: ValueListenableBuilder<int>(
           valueListenable: AppDataBus.version,
-          builder: (context, _, __) {
+          builder: (context, version, child) {
             return Column(
               children: [
                 Container(
@@ -51,14 +51,11 @@ class _FeedingProgramScreenState extends State<FeedingProgramScreen> {
                 Expanded(
                   child: IndexedStack(
                     index: _tabIndex,
-                    // NOT const — these StatelessWidgets must rebuild every
-                    // time AppDataBus fires, or changes won't show until
-                    // the screen is left and re-entered.
                     children: [
-                      const OverviewTab(),
-                      const AttendanceTab(),
-                      const MealPlanTab(),
-                      const WeighingTab(),
+                      OverviewTab(key: ValueKey('overview_$version')),
+                      AttendanceTab(key: ValueKey('attendance_$version')),
+                      MealPlanTab(key: ValueKey('meal_plan_$version')),
+                      WeighingTab(key: ValueKey('weighing_$version')),
                     ],
                   ),
                 ),

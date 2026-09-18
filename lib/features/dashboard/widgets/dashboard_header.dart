@@ -10,6 +10,7 @@ class DashboardHeader extends StatelessWidget {
   final int unreadNotificationCount;
   final VoidCallback onNotificationTap;
   final VoidCallback onSyncTap;
+  final VoidCallback? onProfileTap;
 
   const DashboardHeader({
     super.key,
@@ -19,6 +20,7 @@ class DashboardHeader extends StatelessWidget {
     this.unreadNotificationCount = 0,
     required this.onNotificationTap,
     required this.onSyncTap,
+    this.onProfileTap,
   });
 
   @override
@@ -95,12 +97,15 @@ class DashboardHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: Colors.white,
-            child: Text(
-              bnsName.isNotEmpty ? bnsName[0] : 'B',
-              style: const TextStyle(color: AppColors.darkGreen, fontWeight: FontWeight.w700),
+          GestureDetector(
+            onTap: onProfileTap,
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.white,
+              child: Text(
+                bnsName.isNotEmpty ? bnsName[0] : 'B',
+                style: const TextStyle(color: AppColors.darkGreen, fontWeight: FontWeight.w700),
+              ),
             ),
           ),
         ],
