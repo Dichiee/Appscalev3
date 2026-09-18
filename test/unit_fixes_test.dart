@@ -3,11 +3,11 @@ import 'package:appscalev3/data/growth_standards/growth_classifier.dart';
 import 'package:appscalev3/data/models/referral.dart';
 import 'package:appscalev3/data/models/child.dart';
 import 'package:appscalev3/data/models/guardian.dart';
+import 'package:appscalev3/data/models/app_notification.dart';
 
 void main() {
   group('Item 4: GrowthClassifier Tests', () {
     test('Classifies Overweight when weightKg > posTwoSD', () {
-      // For boy at 24 months, standard: med ~12.2, posTwoSD ~15.3, negTwoSD ~9.7, negThreeSD ~8.6
       final status = GrowthClassifier.classifyWeightForAge(
         ageMonths: 24,
         gender: 'Boy',
@@ -44,7 +44,7 @@ void main() {
     });
   });
 
-  group('Item 6: Referral Status & Notes Tests', () {
+  group('Referral Model Tests', () {
     test('Referral copyWith correctly updates status and notes', () {
       final ref = Referral(
         id: 'ref-1',
@@ -71,7 +71,7 @@ void main() {
     });
   });
 
-  group('Item 1: Child Model Integrity Tests', () {
+  group('Child Model Integrity Tests', () {
     test('Child copyWith preserves wastingStatus and other fields when updated', () {
       final child = Child(
         id: 'c-test',
@@ -99,6 +99,32 @@ void main() {
       expect(updated.nutritionStatus, equals('Underweight'));
       expect(updated.fullName, equals('Baby Smith'));
       expect(updated.guardian.fullName, equals('Mary Smith'));
+    });
+  });
+
+  group('Referral & Notification Web Architecture Tests', () {
+    test('AppNotification model serialization and deserialization', () {
+      final notif = AppNotification(
+        id: 'notif-123',
+        title: 'Referral Resolved by RHU',
+        message: 'RHU completed referral for Baby Juan. Outcome: RUTF supply provided.',
+        type: 'referral_completed',
+        referralId: 'ref-001',
+        timestamp: DateTime(2026, 3, 18, 14, 0),
+        isRead: false,
+      );
+
+      final map = notif.toMap();
+      final restored = AppNotification.fromMap(map);
+
+      expect(restored.id, equals('notif-123'));
+      expect(restored.title, equals('Referral Resolved by RHU'));
+      expect(restored.type, equals('referral_completed'));
+      expect(restored.referralId, equals('ref-001'));
+      expect(restored.isRead, isFalse);
+
+      final markedRead = restored.copyWith(isRead: true);
+      expect(markedRead.isRead, isTrue);
     });
   });
 }

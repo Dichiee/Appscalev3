@@ -1,8 +1,10 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 import '../models/referral.dart';
+import '../models/app_notification.dart';
 import 'app_data_bus.dart';
 import 'hive_boxes.dart';
+import 'notification_repository.dart';
 
 class ReferralRepository {
   Box get _box => Hive.box(HiveBoxes.referrals);
@@ -15,6 +17,53 @@ class ReferralRepository {
 
   Future<void> update(Referral referral) async {
     await _box.put(referral.id, referral.toMap());
+    AppDataBus.notifyChanged();
+  }
+
+  Referral? getById(String id) {
+    final raw = _box.get(id);
+    if (raw == null) return null;
+    return Referral.fromMap(Map<String, dynamic>.from(raw as Map));
+  }
+
+  /// Simulates / processes incoming updates from the RHU Web Portal (Admin/BHW).
+  /// Mobile users cannot edit statuses directly; updates arrive from the web
+  /// and trigger an in-app notification when completed or moved in-progress.
+  Future<void> receiveWebUpdate({
+    required String referralId,
+    required String newStatus,
+    String? notes,
+  }) async {
+    final existing = getById(referralId);
+    if (existing == null) return;
+
+    final updated = existing.copyWith(
+      status: newStatus,
+      notes: notes ?? existing.notes,
+    );
+    await _box.put(updated.id, updated.toMap());
+
+    // Dispatch notification to mobile user
+    if (newStatus == 'Completed') {
+      await NotificationRepository().add(AppNotification(
+        id: NotificationRepository.generateId(),
+        title: 'Referral Resolved by RHU',
+        message: 'RHU/BHW completed referral for ${updated.beneficiaryName}. Outcome: ${notes?.isNotEmpty == true ? notes : "Referral resolved by RHU."}',
+        type: 'referral_completed',
+        referralId: updated.id,
+        timestamp: DateTime.now(),
+      ));
+    } else if (newStatus == 'In Progress') {
+      await NotificationRepository().add(AppNotification(
+        id: NotificationRepository.generateId(),
+        title: 'Referral In Progress at RHU',
+        message: 'RHU/BHW is currently evaluating ${updated.beneficiaryName}.',
+        type: 'referral_in_progress',
+        referralId: updated.id,
+        timestamp: DateTime.now(),
+      ));
+    }
+
     AppDataBus.notifyChanged();
   }
 

@@ -12,6 +12,9 @@ import '../../data/local/auto_graduation_service.dart';
 import '../referrals/referrals_overview_screen.dart';
 import '../../shared/utils/app_page_route.dart';
 
+import '../../data/local/notification_repository.dart';
+import '../notifications/notifications_screen.dart';
+
 import '../masterlist/widgets/masterlist_header.dart';
 
 /// The Home tab's content only. MainShell provides the Scaffold,
@@ -27,6 +30,14 @@ class DashboardBody extends StatefulWidget {
 class _DashboardBodyState extends State<DashboardBody> {
   final _dashboardRepo = DashboardRepository();
   final _activityRepo = ActivityLogRepository();
+  final _notificationRepo = NotificationRepository();
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationRepo.seedInitialIfEmpty();
+    AutoGraduationService().runForBarangay('Tiguion'); // TODO: pull from session
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +48,7 @@ class _DashboardBodyState extends State<DashboardBody> {
         final nutrition = _dashboardRepo.getNutritionBreakdown();
         final upcoming = _dashboardRepo.getUpcomingActivities();
         final recent = _activityRepo.getRecent();
+        final unreadNotifs = _notificationRepo.getUnreadCount();
 
         return RefreshIndicator(
           onRefresh: () async => AppDataBus.notifyChanged(),
@@ -47,8 +59,9 @@ class _DashboardBodyState extends State<DashboardBody> {
                 bnsName: 'BNS Maria',
                 barangayName: 'Barangay Tiguion',
                 pendingSyncCount: 12,
+                unreadNotificationCount: unreadNotifs,
                 onSyncTap: () {},
-                onNotificationTap: () {},
+                onNotificationTap: () => Navigator.push(context, appPageRoute(const NotificationsScreen())),
               ),
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.lg),
@@ -79,10 +92,5 @@ class _DashboardBodyState extends State<DashboardBody> {
         );
       },
     );
-  }
-  @override
-  void initState() {
-    super.initState();
-    AutoGraduationService().runForBarangay('Tiguion'); // TODO: pull from session
   }
 }

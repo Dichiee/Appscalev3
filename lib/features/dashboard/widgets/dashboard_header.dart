@@ -7,6 +7,7 @@ class DashboardHeader extends StatelessWidget {
   final String bnsName;
   final String barangayName;
   final int pendingSyncCount;
+  final int unreadNotificationCount;
   final VoidCallback onNotificationTap;
   final VoidCallback onSyncTap;
 
@@ -15,6 +16,7 @@ class DashboardHeader extends StatelessWidget {
     required this.bnsName,
     required this.barangayName,
     required this.pendingSyncCount,
+    this.unreadNotificationCount = 0,
     required this.onNotificationTap,
     required this.onSyncTap,
   });
@@ -40,7 +42,7 @@ class DashboardHeader extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.18),
+                color: Colors.white.withValues(alpha: 0.18),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -55,10 +57,41 @@ class DashboardHeader extends StatelessWidget {
           const SizedBox(width: 8),
           GestureDetector(
             onTap: onNotificationTap,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.white.withOpacity(0.18), shape: BoxShape.circle),
-              child: const Icon(Icons.notifications_outlined, color: Colors.white, size: 18),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.18),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.notifications_outlined, color: Colors.white, size: 18),
+                ),
+                if (unreadNotificationCount > 0)
+                  Positioned(
+                    top: -2,
+                    right: -2,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: AppColors.statRed,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                      alignment: Alignment.center,
+                      child: Text(
+                        unreadNotificationCount > 9 ? '9+' : '$unreadNotificationCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                          fontWeight: FontWeight.w700,
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ),
           const SizedBox(width: 8),
