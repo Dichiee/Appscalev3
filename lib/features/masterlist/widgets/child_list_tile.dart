@@ -25,7 +25,7 @@ class ChildListTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Material(
-        color: needsAttention ? AppColors.statRed.withOpacity(0.06) : AppColors.surface,
+        color: needsAttention ? AppColors.statRed.withValues(alpha: 0.06) : AppColors.surface,
         borderRadius: BorderRadius.circular(14),
         child: InkWell(
           onTap: onTap,
@@ -34,7 +34,7 @@ class ChildListTile extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: needsAttention ? AppColors.statRed.withOpacity(0.3) : AppColors.border),
+              border: Border.all(color: needsAttention ? AppColors.statRed.withValues(alpha: 0.3) : AppColors.border),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,

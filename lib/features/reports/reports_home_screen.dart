@@ -31,7 +31,7 @@ class _ReportsHomeScreenState extends State<ReportsHomeScreen> {
             onTap: () => Navigator.push(context, appPageRoute(const SyncStatusScreen())),
             child: Container(
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: Colors.white.withOpacity(0.2), shape: BoxShape.circle),
+              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), shape: BoxShape.circle),
               child: const Icon(Icons.sync, color: Colors.white, size: 18),
             ),
           ),

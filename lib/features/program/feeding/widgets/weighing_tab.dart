@@ -31,7 +31,7 @@ class WeighingTab extends StatelessWidget {
               width: double.infinity,
               margin: const EdgeInsets.only(bottom: AppSpacing.md),
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: AppColors.statRed.withOpacity(0.06), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.statRed.withOpacity(0.3))),
+              decoration: BoxDecoration(color: AppColors.statRed.withValues(alpha: 0.06), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.statRed.withValues(alpha: 0.3))),
               child: Row(children: [
                 const Icon(Icons.warning_amber_rounded, color: AppColors.statRed, size: 18),
                 const SizedBox(width: 8),
@@ -66,9 +66,9 @@ class _ChildWeighRow extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: isPriority ? AppColors.statRed.withOpacity(0.04) : AppColors.surface,
+        color: isPriority ? AppColors.statRed.withValues(alpha: 0.04) : AppColors.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: isPriority ? AppColors.statRed.withOpacity(0.3) : AppColors.border),
+        border: Border.all(color: isPriority ? AppColors.statRed.withValues(alpha: 0.3) : AppColors.border),
       ),
       child: Row(
         children: [
@@ -80,7 +80,7 @@ class _ChildWeighRow extends StatelessWidget {
                 Text(child.fullName, style: AppTextStyles.label.copyWith(fontSize: 13)),
                 if (isPriority) ...[
                   const SizedBox(width: 6),
-                  Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: AppColors.statRed.withOpacity(0.12), borderRadius: BorderRadius.circular(20)), child: Text('Priority', style: TextStyle(color: AppColors.statRed, fontSize: 9, fontWeight: FontWeight.w700))),
+                  Container(padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2), decoration: BoxDecoration(color: AppColors.statRed.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(20)), child: Text('Priority', style: TextStyle(color: AppColors.statRed, fontSize: 9, fontWeight: FontWeight.w700))),
                 ],
               ]),
               Text(latest == null ? 'Not yet weighed · Last: —' : '${latest.weightKg} kg · Last: ${latest.date.month}/${latest.date.day}', style: AppTextStyles.body.copyWith(fontSize: 11)),

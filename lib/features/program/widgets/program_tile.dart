@@ -22,7 +22,7 @@ class ProgramTile extends StatelessWidget {
           children: [
             Container(
               width: 46, height: 46,
-              decoration: BoxDecoration(color: iconColor.withOpacity(0.14), borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(color: iconColor.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(12)),
               child: Icon(icon, color: iconColor, size: 22),
             ),
             const SizedBox(width: 12),

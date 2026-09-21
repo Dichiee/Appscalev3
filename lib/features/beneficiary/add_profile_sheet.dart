@@ -107,17 +107,17 @@ class _AddOptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: accentColor.withOpacity(0.06),
+      color: accentColor.withValues(alpha: 0.06),
       borderRadius: BorderRadius.circular(16),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
-        splashColor: accentColor.withOpacity(0.12),
+        splashColor: accentColor.withValues(alpha: 0.12),
         child: Container(
           padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: accentColor.withOpacity(0.25)),
+            border: Border.all(color: accentColor.withValues(alpha: 0.25)),
           ),
           child: Row(
             children: [
@@ -129,7 +129,7 @@ class _AddOptionTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(13),
                   boxShadow: [
                     BoxShadow(
-                      color: accentColor.withOpacity(0.35),
+                      color: accentColor.withValues(alpha: 0.35),
                       blurRadius: 8,
                       offset: const Offset(0, 3),
                     ),
@@ -151,7 +151,7 @@ class _AddOptionTile extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: accentColor.withOpacity(0.12),
+                  color: accentColor.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(Icons.chevron_right, color: accentColor, size: 18),

@@ -262,7 +262,7 @@ class _RecordVitaminAScreenState extends State<RecordVitaminAScreen> {
               const SizedBox(height: AppSpacing.md),
 
               DropdownButtonFormField<String>(
-                value: _dosage,
+                initialValue: _dosage,
                 decoration: InputDecoration(
                   labelText: 'Dosage',
                   filled: true,
@@ -291,7 +291,7 @@ class _RecordVitaminAScreenState extends State<RecordVitaminAScreen> {
               const SizedBox(height: AppSpacing.md),
 
               DropdownButtonFormField<String>(
-                value: _doseType,
+                initialValue: _doseType,
                 decoration: InputDecoration(
                   labelText: 'Dose Category',
                   filled: true,

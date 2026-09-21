@@ -70,7 +70,7 @@ class _EntryTile extends StatelessWidget {
         Container(
           width: 34,
           height: 34,
-          decoration: BoxDecoration(color: color.withOpacity(0.12), shape: BoxShape.circle),
+          decoration: BoxDecoration(color: color.withValues(alpha: 0.12), shape: BoxShape.circle),
           child: Icon(ActivityTypeMeta.iconFor(entry.type), size: 17, color: color),
         ),
         const SizedBox(width: 10),

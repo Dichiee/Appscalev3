@@ -42,7 +42,7 @@ class SyncStatusScreen extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(color: AppColors.statAmber.withOpacity(0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.statAmber.withOpacity(0.4))),
+                  decoration: BoxDecoration(color: AppColors.statAmber.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: AppColors.statAmber.withValues(alpha: 0.4))),
                   child: Row(children: [
                     const Icon(Icons.cloud_off_outlined, color: AppColors.statAmber, size: 20),
                     const SizedBox(width: 10),

@@ -30,7 +30,7 @@ class MasterlistHeader extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Container(
             padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(color: Colors.white.withOpacity(0.18), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.18), borderRadius: BorderRadius.circular(12)),
             child: Row(
               children: [
                 Expanded(child: _segment('Children ($childrenCount)', MasterlistCategory.children)),

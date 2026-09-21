@@ -58,7 +58,7 @@ class _StatusFilterSheetState extends State<StatusFilterSheet> {
               child: Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: _filter.onlyNotWeighed ? AppColors.statRed.withOpacity(0.1) : AppColors.background,
+                  color: _filter.onlyNotWeighed ? AppColors.statRed.withValues(alpha: 0.1) : AppColors.background,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(color: _filter.onlyNotWeighed ? AppColors.statRed : AppColors.border),
                 ),
@@ -138,7 +138,7 @@ class _StatusFilterSheetState extends State<StatusFilterSheet> {
           label: Text(status),
           selected: isSelected,
           onSelected: (_) => onSelected(status),
-          selectedColor: color.withOpacity(0.16),
+          selectedColor: color.withValues(alpha: 0.16),
           labelStyle: TextStyle(color: isSelected ? color : AppColors.textSecondary, fontWeight: FontWeight.w600, fontSize: 12),
           side: BorderSide(color: isSelected ? color : AppColors.border),
           backgroundColor: AppColors.surface,

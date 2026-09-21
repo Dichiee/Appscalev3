@@ -158,7 +158,7 @@ class _RecordDewormingScreenState extends State<RecordDewormingScreen> {
                 )
               else
                 DropdownButtonFormField<Child>(
-                  value: _selectedChild,
+                  initialValue: _selectedChild,
                   decoration: InputDecoration(
                     labelText: 'Select Child',
                     filled: true,
@@ -249,7 +249,7 @@ class _RecordDewormingScreenState extends State<RecordDewormingScreen> {
               const SizedBox(height: AppSpacing.md),
 
               DropdownButtonFormField<String>(
-                value: _drugName,
+                initialValue: _drugName,
                 decoration: InputDecoration(
                   labelText: 'Deworming Drug & Dosage',
                   filled: true,
@@ -274,7 +274,7 @@ class _RecordDewormingScreenState extends State<RecordDewormingScreen> {
               const SizedBox(height: AppSpacing.md),
 
               DropdownButtonFormField<String>(
-                value: _round,
+                initialValue: _round,
                 decoration: InputDecoration(
                   labelText: 'Campaign Round',
                   filled: true,
@@ -303,7 +303,7 @@ class _RecordDewormingScreenState extends State<RecordDewormingScreen> {
               const SizedBox(height: AppSpacing.md),
 
               DropdownButtonFormField<String>(
-                value: _adverseEvents,
+                initialValue: _adverseEvents,
                 decoration: InputDecoration(
                   labelText: 'Adverse Reactions Observed',
                   filled: true,
