@@ -5,6 +5,7 @@ import '../dashboard/dashboard_screen.dart';
 import '../masterlist/masterlist_screen.dart';
 import '../../shared/widgets/coming_soon_placeholder.dart';
 import '../program/program_screen.dart';
+import '../reports/reports_home_screen.dart';
 
 import '../masterlist/widgets/masterlist_header.dart';
 
@@ -38,7 +39,7 @@ class _MainShellState extends State<MainShell> {
           DashboardBody(onNavigateToMasterlist: _navigateToMasterlist),
           MasterlistScreen(key: _masterlistKey),
           const ProgramScreen(),
-          const ComingSoonPlaceholder(label: 'Reports'),
+          const ReportsHomeScreen(),
         ],
       ),
     );
